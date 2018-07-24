@@ -1,1 +1,16 @@
-version: '1'
+version: "3"
+
+services:
+  nginx:
+    build: nginx
+    ports:
+      - "443:443"
+  sync:
+    build: sync
+    ports:
+      - "55555:55555"
+  radicale:
+    build: radicale
+  markserv:
+    build: markserv
+
