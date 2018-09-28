@@ -1,16 +1,33 @@
-version: "3"
+version: "2"
 
 services:
-  nginx:
-    build: nginx
-    ports:
-      - "443:443"
-  sync:
-    build: sync
-    ports:
-      - "55555:55555"
+  #https-portal:
+    #image: steveltn/https-portal:1
+    #ports:
+      #- '80:80'
+      #- '443:443'
+    #links:
+      #- sync
+    #restart: always
+    #environment:
+      #DOMAINS: 'sync.freddieridell.com -> http://sync:8888'
+      #STAGE: local
+    # FORCE_RENEW: 'true'
+  #hypertask: 
+    #build: hypertask
+    #ports: 
+      #- "15423:15423"
+  #sync:
+    #image: resilio/sync
+    #ports:
+      #- "55555:55555"
+      #- "8888:8888"
+    #restart: on-failure
+    #volumes:
+      #- /data
   radicale:
     build: radicale
-  markserv:
-    build: markserv
-
+    volumes:
+      - /data
+  #markserv:
+    #build: markserv
