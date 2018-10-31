@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  #https-portal:
-    #image: steveltn/https-portal:1
-    #ports:
-      #- '80:80'
-      #- '443:443'
-    #links:
-      #- sync
-    #restart: always
-    #environment:
-      #DOMAINS: 'sync.freddieridell.com -> http://sync:8888, git.freddieridell -> http://gitlab:80'
-      #STAGE: local
-      #FORCE_RENEW: 'true'
-  #hypertask: 
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+     - '80:80'
+     - '443:443'
+    links:
+     - gitlab
+    restart: always
+    environment:
+      DOMAINS: 'git.freddieridell.com -> http://gitlab:80'
+      STAGE: local
+      FORCE_RENEW: 'true'
+  #hypertask:
     #build: hypertask
-    #ports: 
+    #ports:
       #- "15423:15423"
   #sync:
     #image: resilio/sync
@@ -31,18 +31,13 @@ services:
       #- /data
   #markserv:
     #build: markserv
-  #gitlab: 
-    #image: 'gitlab/gitlab-ce:latest'
-    #restart: always
-    #hostname: 'gitlab.example.com'
-    #environment:
-      #GITLAB_OMNIBUS_CONFIG: |
-        #external_url 'https://gitlab.example.com'
-    #ports:
-      #- '80:80'
-      #- '443:443'
-      #- '22:22'
-    #volumes:
-      #- '/srv/gitlab/config:/etc/gitlab'
-      #- '/srv/gitlab/logs:/var/log/gitlab'
-      #- '/srv/gitlab/data:/var/opt/gitlab'
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'git.freddieridell.com'
+    ports:
+      - '2222:22'
+    volumes:
+      - '/srv/gitlab/config:/etc/gitlab'
+      - '/srv/gitlab/logs:/var/log/gitlab'
+      - '/srv/gitlab/data:/var/opt/gitlab'
