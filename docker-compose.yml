@@ -7,11 +7,11 @@ services:
      - '80:80'
      - '443:443'
     links:
-     - gitlab
      - sync
+     - radicale
     restart: always
     environment:
-      DOMAINS: 'gitlab.freddieridell.com -> http://gitlab:80, rsync.freddieridell.com -> http://sync:8888'
+      DOMAINS: 'radicale.freddieridell.com -> http://radicale:5232, rsync.freddieridell.com -> http://sync:8888'
       STAGE: staging
   sync:
     image: resilio/sync
@@ -20,29 +20,11 @@ services:
     restart: on-failure
     volumes:
       - '/docker/data/sync:/mnt/sync'
-  gitlab:
-    image: 'gitlab/gitlab-ce:latest'
-    restart: always
-    hostname: 'gitlab.freddieridell.com'
-    ports:
-      - '22:22'
-    volumes:
-      - '/docker/gitlab/config:/etc/gitlab'
-      - '/docker/gitlab/logs:/var/log/gitlab'
-      - '/docker/gitlab/data:/var/opt/gitlab'
-  gitlab-runner:
-    image: gitlab/gitlab-runner:latest
-    restart: always
-    volumes:
-      - '/docker/gitlab-runner/config:/etc/gitlab-runner'
-      - '/docker/gitlab-runner/run/docker.sock:/var/run/docker.sock'
   #hypertask:
     #build: hypertask
     #ports:
       #- "15423:15423"
-  #radicale:
-    #build: radicale
-    #volumes:
-      #- /data
-  #markserv:
-    #build: markserv
+  radicale:
+    build: radicale
+    volumes:
+      - /data
