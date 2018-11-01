@@ -19,7 +19,7 @@ services:
       - "55555:55555"
     restart: on-failure
     volumes:
-      - /data
+      - /data/sync:/mnt/sync
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
