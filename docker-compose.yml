@@ -11,7 +11,7 @@ services:
     restart: always
     environment:
       DOMAINS: 'git.freddieridell.com -> http://gitlab:80, rsync.freddieridell.com -> http://sync:8888'
-      STAGE: local
+      STAGE: production
       FORCE_RENEW: 'true'
   sync:
     image: resilio/sync
