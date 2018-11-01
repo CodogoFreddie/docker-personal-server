@@ -30,6 +30,12 @@ services:
       - '/docker/gitlab/config:/etc/gitlab'
       - '/docker/gitlab/logs:/var/log/gitlab'
       - '/docker/gitlab/data:/var/opt/gitlab'
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - '/docker/gitlab-runner/config:/etc/gitlab-runner'
+      - '/docker/gitlab-runner/run/docker.sock:/var/run/docker.sock'
   #hypertask:
     #build: hypertask
     #ports:
