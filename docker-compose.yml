@@ -10,27 +10,16 @@ services:
      - gitlab
     restart: always
     environment:
-      DOMAINS: 'git.freddieridell.com -> http://gitlab:80'
+      DOMAINS: 'git.freddieridell.com -> http://gitlab:80, rsync.freddieridell.com -> http://sync:8888'
       STAGE: local
       FORCE_RENEW: 'true'
-  #hypertask:
-    #build: hypertask
-    #ports:
-      #- "15423:15423"
-  #sync:
-    #image: resilio/sync
-    #ports:
-      #- "55555:55555"
-      #- "8888:8888"
-    #restart: on-failure
-    #volumes:
-      #- /data
-  #radicale:
-    #build: radicale
-    #volumes:
-      #- /data
-  #markserv:
-    #build: markserv
+  sync:
+    image: resilio/sync
+    ports:
+      - "55555:55555"
+    restart: on-failure
+    volumes:
+      - /data
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
@@ -41,3 +30,13 @@ services:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
       - '/srv/gitlab/data:/var/opt/gitlab'
+  #hypertask:
+    #build: hypertask
+    #ports:
+      #- "15423:15423"
+  #radicale:
+    #build: radicale
+    #volumes:
+      #- /data
+  #markserv:
+    #build: markserv
