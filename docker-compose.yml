@@ -11,7 +11,7 @@ services:
      - sync
     restart: always
     environment:
-      DOMAINS: 'git.freddieridell.com -> http://gitlab:80, rsync.freddieridell.com -> http://sync:8888'
+      DOMAINS: 'gitlab.freddieridell.com -> http://gitlab:80, rsync.freddieridell.com -> http://sync:8888'
       STAGE: production
       FORCE_RENEW: 'true'
   sync:
@@ -20,17 +20,17 @@ services:
       - "55555:55555"
     restart: on-failure
     volumes:
-      - /data/sync:/mnt/sync
+      - '/docker/data/sync:/mnt/sync'
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
-    hostname: 'git.freddieridell.com'
+    hostname: 'gitlab.freddieridell.com'
     ports:
       - '22:22'
     volumes:
-      - '/srv/gitlab/config:/etc/gitlab'
-      - '/srv/gitlab/logs:/var/log/gitlab'
-      - '/srv/gitlab/data:/var/opt/gitlab'
+      - '/docker/gitlab/config:/etc/gitlab'
+      - '/docker/gitlab/logs:/var/log/gitlab'
+      - '/docker/gitlab/data:/var/opt/gitlab'
   #hypertask:
     #build: hypertask
     #ports:
